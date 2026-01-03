@@ -341,3 +341,4 @@ curl -X POST http://localhost:5001/api/auth/logout \
 
 This project is created for internship/learning purposes.
 
+by MANYA SHUKLA 
