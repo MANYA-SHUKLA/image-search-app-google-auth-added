@@ -19,14 +19,13 @@
       "dest": "/api/index.js"
     },
     {
-      "src": "/(.*)",
-      "dest": "/client/$1"
+      "handle": "filesystem"
     }
   ],
   "rewrites": [
     {
       "source": "/((?!api).*)",
-      "destination": "/index.html"
+      "destination": "/client/dist/index.html"
     }
   ]
 }
