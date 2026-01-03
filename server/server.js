@@ -46,6 +46,20 @@ app.use(passport.session());
 app.use('/api/auth', authRoutes);
 app.use('/api', searchRoutes);
 
+// Root route
+app.get('/', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    message: 'Image Search API Server',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      search: '/api/search'
+    }
+  });
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
