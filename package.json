@@ -1,0 +1,15 @@
+{
+  "name": "image-search-app",
+  "version": "1.0.0",
+  "description": "Image Search App - MERN Stack with OAuth",
+  "scripts": {
+    "install-client": "cd client && npm install",
+    "install-server": "cd server && npm install",
+    "install-all": "npm run install-server && npm run install-client",
+    "build": "cd client && npm run build"
+  },
+  "keywords": [],
+  "author": "Manya Shukla",
+  "license": "ISC"
+}
+

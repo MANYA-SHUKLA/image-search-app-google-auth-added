@@ -337,6 +337,50 @@ curl -X POST http://localhost:5001/api/auth/logout \
 - Verify `CLIENT_URL` in `.env` matches your frontend URL
 - Check that credentials are enabled in axios requests
 
+## Deployment
+
+### Vercel Deployment
+
+The application is deployed on Vercel:
+- **Live URL**: https://image-search-app-google-auth-added.vercel.app
+
+**Important**: This app requires both frontend and backend. For Vercel deployment:
+- The frontend can be deployed to Vercel as a static site
+- The backend (Express server) should be deployed separately (e.g., Railway, Render, or Vercel Serverless Functions)
+- Update `VITE_API_URL` to point to your backend URL
+- The `vercel.json` file configures SPA routing for the frontend
+
+#### Production Environment Variables
+
+For production deployment on Vercel, set the following environment variables:
+
+**Backend Environment Variables:**
+- `PORT` - Server port (Vercel handles this automatically)
+- `MONGODB_URI` - MongoDB Atlas connection string
+- `SESSION_SECRET` - Secure session secret
+- `GOOGLE_CLIENT_ID` - Google OAuth Client ID
+- `GOOGLE_CLIENT_SECRET` - Google OAuth Client Secret
+- `BACKEND_URL` - `https://image-search-app-google-auth-added.vercel.app`
+- `CLIENT_URL` - `https://image-search-app-google-auth-added.vercel.app`
+- `NODE_ENV` - `production`
+
+**Frontend Environment Variables:**
+- `VITE_API_URL` - `https://image-search-app-google-auth-added.vercel.app`
+
+#### Google OAuth Configuration for Production
+
+Update your Google OAuth credentials in [Google Cloud Console](https://console.cloud.google.com/apis/credentials):
+
+1. Go to your OAuth 2.0 Client ID
+2. Add to **Authorized JavaScript origins**:
+   ```
+   https://image-search-app-google-auth-added.vercel.app
+   ```
+3. Add to **Authorized redirect URIs**:
+   ```
+   https://image-search-app-google-auth-added.vercel.app/api/auth/google/callback
+   ```
+
 ## License
 
 This project is created for internship/learning purposes.
