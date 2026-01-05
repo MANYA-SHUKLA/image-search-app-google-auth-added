@@ -17,6 +17,9 @@
     {
       "src": "/api/(.*)",
       "dest": "/api/index.js"
+    },
+    {
+      "handle": "filesystem"
     }
   ],
   "rewrites": [
