@@ -42,12 +42,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes - Remove /api prefix for Vercel serverless
-app.use('/auth', authRoutes);
-app.use('/', searchRoutes);
+// Routes - Include /api prefix since Vercel routes to this function
+app.use('/api/auth', authRoutes);
+app.use('/api', searchRoutes);
 
 // Root route
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.json({ 
     status: 'OK', 
     message: 'Image Search API Server',
@@ -62,7 +62,7 @@ app.get('/', (req, res) => {
 });
 
 // Health check
-app.get('/health', (req, res) => {
+app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
