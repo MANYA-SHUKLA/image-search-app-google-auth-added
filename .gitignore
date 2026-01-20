@@ -1,31 +1,162 @@
+# ============================================
 # Dependencies
+# ============================================
 node_modules/
 package-lock.json
 yarn.lock
+pnpm-lock.yaml
+.pnp
+.pnp.js
 
-# Environment variables
+# ============================================
+# Environment Variables
+# ============================================
 .env
 .env.local
+.env.development
 .env.development.local
+.env.test
 .env.test.local
+.env.production
 .env.production.local
 
-# Build outputs
+# ============================================
+# Build Outputs
+# ============================================
+# Frontend build
+frontend/dist/
+frontend/build/
+frontend/.vite/
+
+# Backend build
+backend/dist/
+backend/build/
+
+# General build outputs
 dist/
 build/
-*.log
+out/
+.next/
+.nuxt/
 
-# IDE
+# ============================================
+# Logs
+# ============================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs/
+
+# ============================================
+# Testing
+# ============================================
+coverage/
+*.lcov
+.nyc_output/
+.jest/
+
+# ============================================
+# IDE & Editor Files
+# ============================================
+# VSCode
 .vscode/
+*.code-workspace
+
+# JetBrains IDEs
 .idea/
+*.iml
+*.iws
+*.ipr
+
+# Vim
 *.swp
 *.swo
 *~
+.vim/
 
-# OS
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ============================================
+# OS Files
+# ============================================
+# macOS
 .DS_Store
-Thumbs.db
+.AppleDouble
+.LSOverride
+._*
 
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ============================================
+# Database
+# ============================================
 # MongoDB
 data/
+*.mongodb
+
+# SQLite
+*.sqlite
+*.sqlite3
+*.db
+
+# ============================================
+# Cache & Temporary Files
+# ============================================
+.cache/
+.temp/
+.tmp/
+*.tmp
+*.temp
+
+# Frontend specific
+frontend/.turbo/
+frontend/.eslintcache
+
+# Backend specific
+backend/.turbo/
+
+# ============================================
+# Vercel
+# ============================================
+.vercel
+
+# ============================================
+# Render
+# ============================================
+.render/
+
+# ============================================
+# Miscellaneous
+# ============================================
+*.seed
+*.pid
+*.pid.lock
+.lock-wscript
+
+# Runtime data
+pids/
+lib-cov/
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 

@@ -15,7 +15,7 @@ A full-stack image search application built with MongoDB, Express.js, React.js, 
 
 ```
 image-search-app/
-├── server/                 # Backend (Express + Node.js)
+├── backend/               # Backend (Express + Node.js) - Deploy to Render
 │   ├── config/            # Configuration files
 │   │   ├── database.js    # MongoDB connection
 │   │   └── passport.js    # Passport OAuth strategies
@@ -27,24 +27,31 @@ image-search-app/
 │   │   └── search.js      # Search and history routes
 │   ├── server.js          # Express server entry point
 │   ├── package.json       # Backend dependencies
-│   └── .env.example       # Environment variables template
+│   └── render.yaml        # Render deployment configuration
 │
-└── client/                # Frontend (React + Vite)
-    ├── src/
-    │   ├── components/    # React components
-    │   │   ├── Login.jsx
-    │   │   ├── TopSearches.jsx
-    │   │   ├── SearchBar.jsx
-    │   │   ├── ImageGrid.jsx
-    │   │   └── SearchHistory.jsx
-    │   ├── App.jsx        # Main app component
-    │   ├── main.jsx       # React entry point
-    │   └── index.css      # Tailwind CSS imports
-    ├── index.html
-    ├── package.json       # Frontend dependencies
-    ├── vite.config.js     # Vite configuration
-    ├── tailwind.config.js # Tailwind CSS configuration
-    └── postcss.config.js  # PostCSS configuration
+├── frontend/              # Frontend (React + Vite) - Deploy to Vercel
+│   ├── src/
+│   │   ├── components/    # React components
+│   │   │   ├── Login.jsx
+│   │   │   ├── TopSearches.jsx
+│   │   │   ├── SearchBar.jsx
+│   │   │   ├── ImageGrid.jsx
+│   │   │   └── SearchHistory.jsx
+│   │   ├── config/
+│   │   │   └── api.js     # API configuration
+│   │   ├── App.jsx        # Main app component
+│   │   ├── main.jsx       # React entry point
+│   │   └── index.css      # Tailwind CSS imports
+│   ├── public/
+│   │   └── favicon.svg
+│   ├── index.html
+│   ├── package.json       # Frontend dependencies
+│   ├── vite.config.js     # Vite configuration
+│   ├── tailwind.config.js # Tailwind CSS configuration
+│   └── postcss.config.js  # PostCSS configuration
+│
+├── README.md              # This file
+└── .gitignore             # Comprehensive gitignore for both frontend & backend
 ```
 
 ## Prerequisites
@@ -65,11 +72,11 @@ cd image-search-app
 ### 2. Backend Setup
 
 ```bash
-cd server
+cd backend
 npm install
 ```
 
-Create a `.env` file in the `server` directory:
+Create a `.env` file in the `backend` directory:
 
 ```bash
 cp .env.example .env
@@ -104,7 +111,7 @@ CLIENT_URL=http://localhost:3000
 ### 3. Frontend Setup
 
 ```bash
-cd ../client
+cd ../frontend
 npm install
 ```
 
@@ -130,13 +137,15 @@ Or ensure your MongoDB Atlas connection string is correct in `.env`.
 
 **Terminal 1 - Backend:**
 ```bash
-cd server
+cd backend
+npm install
 npm run dev
 ```
 
 **Terminal 2 - Frontend:**
 ```bash
-cd client
+cd frontend
+npm install
 npm run dev
 ```
 
@@ -339,47 +348,75 @@ curl -X POST http://localhost:5001/api/auth/logout \
 
 ## Deployment
 
-### Vercel Deployment
+### Backend Deployment (Render)
 
-The application is deployed on Vercel:
-- **Live URL**: https://image-search-app-google-auth-added.vercel.app
+The backend is designed to be deployed on [Render](https://render.com/):
 
-**Important**: This app requires both frontend and backend. For Vercel deployment:
-- The frontend can be deployed to Vercel as a static site
-- The backend (Express server) should be deployed separately (e.g., Railway, Render, or Vercel Serverless Functions)
-- Update `VITE_API_URL` to point to your backend URL
-- The `vercel.json` file configures SPA routing for the frontend
+1. **Create a new Web Service** on Render
+2. **Connect your GitHub repository**
+3. **Configure the service:**
+   - **Name:** `image-search-backend` (or your preferred name)
+   - **Region:** Select your preferred region
+   - **Branch:** `main`
+   - **Root Directory:** `backend`
+   - **Runtime:** `Node`
+   - **Build Command:** `npm install`
+   - **Start Command:** `node server.js`
 
-#### Production Environment Variables
+4. **Add Environment Variables** in Render dashboard:
+   ```env
+   NODE_ENV=production
+   MONGODB_URI=<your-mongodb-atlas-connection-string>
+   SESSION_SECRET=<generate-a-secure-random-string>
+   GOOGLE_CLIENT_ID=<your-google-oauth-client-id>
+   GOOGLE_CLIENT_SECRET=<your-google-oauth-client-secret>
+   CLIENT_URL=<your-vercel-frontend-url>
+   PORT=5001
+   ```
 
-For production deployment on Vercel, set the following environment variables:
+5. **Deploy** - Render will automatically deploy your backend
 
-**Backend Environment Variables:**
-- `PORT` - Server port (Vercel handles this automatically)
-- `MONGODB_URI` - MongoDB Atlas connection string
-- `SESSION_SECRET` - Secure session secret
-- `GOOGLE_CLIENT_ID` - Google OAuth Client ID
-- `GOOGLE_CLIENT_SECRET` - Google OAuth Client Secret
-- `BACKEND_URL` - `https://image-search-app-google-auth-added.vercel.app`
-- `CLIENT_URL` - `https://image-search-app-google-auth-added.vercel.app`
-- `NODE_ENV` - `production`
+### Frontend Deployment (Vercel)
 
-**Frontend Environment Variables:**
-- `VITE_API_URL` - `https://image-search-app-google-auth-added.vercel.app`
+The frontend is designed to be deployed on [Vercel](https://vercel.com/):
 
-#### Google OAuth Configuration for Production
+1. **Import your GitHub repository** in Vercel
+2. **Configure the project:**
+   - **Framework Preset:** Vite
+   - **Root Directory:** `frontend`
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+
+3. **Add Environment Variables** in Vercel dashboard:
+   ```env
+   VITE_API_URL=<your-render-backend-url>
+   ```
+   Example: `VITE_API_URL=https://your-app.onrender.com`
+
+4. **Deploy** - Vercel will automatically deploy your frontend and handle SPA routing
+
+### Google OAuth Configuration for Production
 
 Update your Google OAuth credentials in [Google Cloud Console](https://console.cloud.google.com/apis/credentials):
 
 1. Go to your OAuth 2.0 Client ID
 2. Add to **Authorized JavaScript origins**:
    ```
-   https://image-search-app-google-auth-added.vercel.app
+   https://your-frontend-url.vercel.app
+   https://your-backend-url.onrender.com
    ```
 3. Add to **Authorized redirect URIs**:
    ```
-   https://image-search-app-google-auth-added.vercel.app/api/auth/google/callback
+   https://your-backend-url.onrender.com/api/auth/google/callback
    ```
+
+### MongoDB Atlas Setup for Production
+
+1. Create a [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) account
+2. Create a new cluster (free tier available)
+3. Add database user with password
+4. Whitelist IP addresses (allow access from anywhere for Render/Vercel: `0.0.0.0/0`)
+5. Get connection string and add to environment variables
 
 ## License
 
