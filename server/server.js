@@ -52,6 +52,7 @@ app.get('/', (req, res) => {
     status: 'OK', 
     message: 'Image Search API Server',
     version: '1.0.0',
+    madeBy: 'Made with ❤️ by Manya Shukla',
     endpoints: {
       health: '/api/health',
       auth: '/api/auth',
